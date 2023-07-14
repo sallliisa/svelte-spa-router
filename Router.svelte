@@ -277,11 +277,13 @@ function scrollstateHistoryHandler(href) {
     {/if}
 {:else}
     {#if wrapper}
+        <svelte:component this={wrapper}>
             <svelte:component
             this="{component}"
             on:routeEvent
             {...props}
             />
+        </svelte:component>
     {:else}
         <svelte:component
         this="{component}"
