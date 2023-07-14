@@ -215,7 +215,9 @@ export default class Router extends SvelteComponent {
          * If set to true, the router will restore scroll positions on back navigation
          * and scroll to top on forward navigation.
          */
-        restoreScrollState?: boolean
+        restoreScrollState?: boolean,
+        inTransition: Function | null,
+        outTransition: Function | null,
     }
 
     $on(event: 'routeEvent', callback: (event: CustomEvent) => void): () => void
