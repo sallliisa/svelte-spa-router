@@ -258,18 +258,22 @@ function scrollstateHistoryHandler(href) {
 </script>
 
 {#if componentParams}
-    <svelte:component
-    this="{component}"
-    params="{componentParams}"
-    on:routeEvent
-    {...props}
-    />
+    <div in:inTransition out:outTransition>
+        <svelte:component
+        this="{component}"
+        params="{componentParams}"
+        on:routeEvent
+        {...props}
+        />
+    </div>
 {:else}
-    <svelte:component
-    this="{component}"
-    on:routeEvent
-    {...props}
-    />
+    <div in:inTransition out:outTransition>
+        <svelte:component
+        this="{component}"
+        on:routeEvent
+        {...props}
+        />
+    </div>
 {/if}
 
 <script>
@@ -292,6 +296,8 @@ import {parse} from 'regexparam'
  * ````
  */
 export let routes = {}
+export let inTransition = () => {}
+export let outTransition = () => {}
 
 /**
  * Optional prefix for the routes in this router. This is useful for example in the case of nested routers.
