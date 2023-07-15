@@ -216,6 +216,16 @@ export default class Router extends SvelteComponent {
          * and scroll to top on forward navigation.
          */
         restoreScrollState?: boolean,
+        transitions?: {
+            in: {
+                func: Function,
+                options: {[key: string]: any}
+            },
+            out: {
+                func: Function,
+                options: {[key: string]: any}
+            },
+        }
     }
 
     $on(event: 'routeEvent', callback: (event: CustomEvent) => void): () => void
