@@ -225,6 +225,7 @@ export default class Router extends SvelteComponent {
                 func: Function,
                 options: {[key: string]: any}
             },
+            key: any
         }
     }
 

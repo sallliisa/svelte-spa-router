@@ -257,24 +257,27 @@ function scrollstateHistoryHandler(href) {
 }
 </script>
 
-{#if componentParams}
-    <div in:transitionInFunc={transitionInOptions} out:transitionOutFunc={transitionOutOptions}>
-        <svelte:component
-        this="{component}"
-        params="{componentParams}"
-        on:routeEvent
-        {...props}
-        />
-    </div>
-{:else}
-    <div in:transitionInFunc={transitionInOptions} out:transitionOutFunc={transitionOutOptions}>
-        <svelte:component
-        this="{component}"
-        on:routeEvent
-        {...props}
-        />
-    </div>
-{/if}
+{#key transitions.key}
+    {#if componentParams}
+        <div in:transitionInFunc={transitions.in.options} out:transitionOutFunc={transitions.out.options}>
+            <svelte:component
+            this="{component}"
+            params="{componentParams}"
+            on:routeEvent
+            {...props}
+            />
+        </div>
+    {:else}
+        <div in:transitionInFunc={transitions.in.options} out:transitionOutFunc={transitions.out.options}>
+            <svelte:component
+            this="{component}"
+            on:routeEvent
+            {...props}
+            />
+        </div>
+    {/if}
+{/key}
+
 
 <script>
 import {onDestroy, createEventDispatcher, afterUpdate} from 'svelte'
@@ -304,12 +307,11 @@ let transitions = {
     out: {
         func: () => {},
         options: {}
-    }
+    },
+    key: null
 }
 const transitionInFunc = transitions.in.func
-const transitionInOptions = transitions.in.options
 const transitionOutFunc = transitions.out.func
-const transitionOutOptions = transitions.out.options
 
 /**
  * Optional prefix for the routes in this router. This is useful for example in the case of nested routers.
