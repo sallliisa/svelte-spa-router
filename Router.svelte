@@ -257,26 +257,23 @@ function scrollstateHistoryHandler(href) {
 }
 </script>
 
-{#key transitions.key}
-    {#if componentParams}
-        <div in:transitionInFunc={transitions.in.options} out:transitionOutFunc={transitions.out.options}>
-            <svelte:component
-            this="{component}"
-            params="{componentParams}"
-            on:routeEvent
-            {...props}
-            />
-        </div>
-    {:else}
-        <div in:transitionInFunc={transitions.in.options} out:transitionOutFunc={transitions.out.options}>
-            <svelte:component
-            this="{component}"
-            on:routeEvent
-            {...props}
-            />
-        </div>
-    {/if}
-{/key}
+{#if wrapper}
+    <svelte:component this={wrapper}>
+        <svelte:component
+        this="{component}"
+        params="{componentParams ?? undefined}"
+        on:routeEvent
+        {...props}
+        />
+    </svelte:component>
+{:else}
+    <svelte:component
+    this="{component}"
+    params="{componentParams ?? undefined}"
+    on:routeEvent
+    {...props}
+    />
+{/if}
 
 
 <script>
@@ -299,20 +296,7 @@ import {parse} from 'regexparam'
  * ````
  */
 export let routes = {}
-let transitions = {
-    in: {
-        func: () => {},
-        options: {}
-    },
-    out: {
-        func: () => {},
-        options: {}
-    },
-    key: null
-}
-const transitionInFunc = transitions.in.func
-const transitionOutFunc = transitions.out.func
-
+export let wrapper = null
 /**
  * Optional prefix for the routes in this router. This is useful for example in the case of nested routers.
  */
